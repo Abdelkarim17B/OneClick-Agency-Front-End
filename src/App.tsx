@@ -5,7 +5,7 @@ import ZoomProvider from "./components/Responsiveness/ZoomContext";
 
 function App() {
 
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowIntro(false);
