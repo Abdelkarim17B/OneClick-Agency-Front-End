@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 interface SectionLayoutProps {
     PatternModel: number,
     children: ReactNode;
-  }
+}
 
 
 function SectionLayout({PatternModel, children} : SectionLayoutProps) {

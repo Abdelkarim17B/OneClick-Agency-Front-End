@@ -9,7 +9,16 @@ export default {
       med: "720px",
       max: "1280px",
     },
-    extend: {},
+    extend: {
+      zIndex: {
+        '70': '70',
+        '60': '60',
+      },
+      spacing: {
+        '120': '30rem',
+        '128': '34rem',
+      }
+    },
   },
   plugins: [],
 }
