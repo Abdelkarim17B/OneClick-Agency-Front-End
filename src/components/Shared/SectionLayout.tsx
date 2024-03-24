@@ -14,7 +14,14 @@ function SectionLayout({PatternModel, children} : SectionLayoutProps) {
         <img src='/Pattern.webp' alt='Pattern' className="relative top-[-120px] left-[43px]"/>
         <img src='/Pattern.webp' alt='Pattern' className="relative top-[500px] left-[1760px]"/>
       </div>
-  )}    
+      )}    
+      {PatternModel===2 && (
+          <div className='h-screen w-screen absolute top-0 left-0 overflow-hidden hidden max:block'>
+            <img src='/Pattern.webp' alt='Pattern' className="relative top-[-145px] left-[281px]"/>
+            <img src='/Pattern.webp' alt='Pattern' className="relative top-[-144px] left-[1816px]"/>
+            <img src='/Pattern.webp' alt='Pattern' className="relative top-128 -left-64"/>
+          </div>
+      )}  
        
         {children}
     </div>
