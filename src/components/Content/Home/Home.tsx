@@ -2,6 +2,7 @@ import { IParallax, Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { useRef } from "react";
 import Hero from "./Hero/Hero";
 import About from "./About/About";
+import Services from "./Services/Services";
 
 function Home() {
   const parallax = useRef<IParallax>(null)
@@ -17,9 +18,7 @@ function Home() {
       </ParallaxLayer>
 
       <ParallaxLayer offset={2} speed={0.1} sticky={{ start: 2, end: 4 }} onClick={() => parallax.current?.scrollTo(3)}>
-        <div className="h-screen w-screen bg-red-400">
-          <h1>this is section 3</h1>
-        </div>
+        <Services />
       </ParallaxLayer>
 
       <ParallaxLayer offset={3} speed={0.1} sticky={{ start: 3, end: 4 }} onClick={() => parallax.current?.scrollTo(4)}>
