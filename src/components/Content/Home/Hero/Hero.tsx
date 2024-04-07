@@ -1,12 +1,21 @@
 import Navbar from '../../../Shared/Navbar'
 import Button from '../../../Utils/Button'
 import { useZoom } from '../../../Responsiveness/ZoomContext';
+import { useEffect, useState } from 'react';
 
 function Hero() { 
-    const zoom  = useZoom();
+  const [show, setShow] = useState(false);
+  const zoom = useZoom();
+
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        setShow(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+   }, []);
     return (
     <div className="h-screen w-screen px-16 max:px-40 med:px-28 py-12">
-          <div className='w-[100%] h-[100%] flex flex-col justify-between items-center'>
+          <div className={`w-[100%] h-[100%] flex flex-col justify-between items-center transition-opacity duration-500 ease-in ${show ? 'opacity-100' : 'opacity-0'}`}>
             <Navbar />
             
             <div className='flex flex-col gap-20 items-center'>

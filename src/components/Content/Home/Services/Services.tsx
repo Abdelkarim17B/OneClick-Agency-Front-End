@@ -1,35 +1,72 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useZoom } from '../../../Responsiveness/ZoomContext';
 import SectionLayout from '../../../Shared/SectionLayout';
 import Service from './Service';
 
-function Services() {
-    const zoom = useZoom();
+function Services({ visibility }: { visibility: boolean }){
+    const [show, setShow] = useState(false);
+ const zoom = useZoom();
+ const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleWheel = (evt: WheelEvent) => {
-            evt.preventDefault();
-            const scrollContainer = document.querySelector("main");
-            if (scrollContainer) {
-                scrollContainer.scrollLeft += evt.deltaY;
-            }
-        };
+ useEffect(() => {
+    if (visibility) {
+      const timer = setTimeout(() => {
+        setShow(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+ }, [visibility]);
 
-        const scrollContainer = document.querySelector("main");
-        if (scrollContainer) {
-            scrollContainer.addEventListener("wheel", handleWheel);
-        }
+ useEffect(() => {
+    let firstClientX: number, clientX: number;
 
-        return () => {
-            if (scrollContainer) {
-                scrollContainer.removeEventListener("wheel", handleWheel);
-            }
-        };
-    }, []);
+    const preventTouch = (e: TouchEvent) => {
+      const minValue = 5; // threshold
+      clientX = e.touches[0].clientX - firstClientX;
+
+      if (Math.abs(clientX) > minValue) {
+        e.preventDefault();
+        e.returnValue = false;
+        return false;
+      }
+    };
+
+    const touchStart = (e: TouchEvent) => {
+      firstClientX = e.touches[0].clientX;
+    };
+
+    const handleWheel = (evt: WheelEvent) => {
+      evt.preventDefault();
+      const scrollContainer = document.querySelector("main");
+      if (scrollContainer) {
+        scrollContainer.scrollLeft += evt.deltaY;
+      }
+    };
+
+    const scrollContainer = document.querySelector("main");
+    if (scrollContainer) {
+      scrollContainer.addEventListener("wheel", handleWheel);
+    }
+
+    if (containerRef.current) {
+      containerRef.current.addEventListener("touchstart", touchStart);
+      containerRef.current.addEventListener("touchmove", preventTouch, { passive: false });
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener("wheel", handleWheel);
+      }
+      if (containerRef.current) {
+        containerRef.current.removeEventListener("touchstart", touchStart);
+        containerRef.current.removeEventListener("touchmove", preventTouch, { passive: false });
+      }
+    };
+ }, []);
 
     return (
         <SectionLayout PatternModel={2}>
-            <div className="w-full h-full flex flex-col justify-between items-center">
+            <div className={`w-full h-full flex flex-col justify-between items-center transition-opacity duration-500 ease-in ${show ? 'opacity-100' : 'opacity-0'}`}>
                 <h1 className={`text-white uppercase font-bold h-[10%] ${zoom > 1 ? "text-[2rem]" : "text-[2.5rem]"}`}>Our <span className='text-[#50D3AE] font-bold'>Services</span></h1>
                 <div className="w-screen overflow-x-hidden h-[90%] translate-y-12">
                     <main className='overflow-x-hidden flex top-0 h-[100%] services-container'>
