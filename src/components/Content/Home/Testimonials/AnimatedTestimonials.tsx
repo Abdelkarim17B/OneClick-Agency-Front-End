@@ -1,12 +1,6 @@
-import { useEffect, useState } from 'react';
 import ClientsTestimonials from './ClientsTestimonials';
 
 function AnimatedTestimonials({ Current }: { Current: number }) {
- const [prevCurrent, setPrevCurrent] = useState(Current);
-
- useEffect(() => {
-    setPrevCurrent(Current);
- }, [Current]);
 
 
  return (

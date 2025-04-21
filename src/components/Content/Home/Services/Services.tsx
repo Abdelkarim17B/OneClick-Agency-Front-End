@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useZoom } from '../../../Responsiveness/ZoomContext';
 import SectionLayout from '../../../Shared/SectionLayout';
 import Service from './Service';
 
-function Services() {
+function Services({ visibility }: { visibility: boolean }) {
     const zoom = useZoom();
+      const [show, setShow] = useState(false);
+    
 
     useEffect(() => {
         const handleWheel = (evt: WheelEvent) => {
@@ -27,10 +29,19 @@ function Services() {
         };
     }, []);
 
+    useEffect(() => {
+        if (visibility) {
+          const timer = setTimeout(() => {
+            setShow(true);
+          }, 1000);
+          return () => clearTimeout(timer);
+        }
+     }, [visibility]);
+
     return (
         <SectionLayout PatternModel={2}>
             <div className="w-full h-full flex flex-col justify-between items-center">
-                <h1 className={`text-white uppercase font-bold h-[10%] ${zoom > 1 ? "text-[2rem]" : "text-[2.5rem]"}`}>Our <span className='text-[#50D3AE] font-bold'>Services</span></h1>
+                <h1 className={`text-white uppercase font-bold h-[10%] ${zoom > 1 ? "text-[2rem]" : "text-[2.5rem]"} ${show ? 'opacity-100' : 'opacity-0'}`}>Our <span className='text-[#50D3AE] font-bold'>Services</span></h1>
                 <div className="w-screen overflow-x-hidden h-[90%] translate-y-12">
                     <main className='overflow-x-hidden flex top-0 h-[100%] services-container'>
                             <div className='max:min-w-[20vw] min-w-[50vw]  med:min-w-[30vw] h-[100%] flex justify-center items-center z-70 translate-x-64'>

@@ -36,7 +36,7 @@ export default function Projects() {
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
   const [openPopUp, setOpenPopUp] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
 
   const nextPage = () => {
@@ -47,7 +47,7 @@ export default function Projects() {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  const handleOpenPopUp = (project) => {
+  const handleOpenPopUp = (project: Project) => {
     setSelectedProject(project);
     setOpenPopUp(true);
     

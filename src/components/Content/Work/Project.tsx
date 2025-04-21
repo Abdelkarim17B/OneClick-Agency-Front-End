@@ -1,4 +1,4 @@
-export default function Project({ project, handleOpenPopUp }) {
+export default function Project({ project, handleOpenPopUp }: { project: any, handleOpenPopUp: (project: any) => void }) {
   return (
     <div className="w-[25%] h-[670px] bg-white flex flex-col gap-5 p-2 rounded-sm shadow-md drop-shadow-md">
       <div className="w-full  h-[60%]">

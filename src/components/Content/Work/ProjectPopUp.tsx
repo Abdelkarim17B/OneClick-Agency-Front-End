@@ -1,6 +1,17 @@
 import { IoMdClose } from "react-icons/io";
 
-export default function ProjectPopUp({ project, handleClosePopUp }) {
+interface Project {
+  title: string;
+  thumbnail: string;
+  description: string;
+}
+
+interface ProjectPopUpProps {
+  project: Project;
+  handleClosePopUp: () => void;
+}
+
+export default function ProjectPopUp({ project, handleClosePopUp }: ProjectPopUpProps) {
   return (
     <div className="fixed top-0 left-0 bottom-0 right-0  z-99  backdrop-filter backdrop-blur-lg bg-opacity-50 flex items-center justify-center">
       <div className="bg-white w-[70%] h-[65%] rounded-sm flex justify-between">
