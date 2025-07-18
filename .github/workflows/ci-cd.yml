@@ -71,23 +71,28 @@ jobs:
     - name: Run security audit
       run: npm audit --audit-level high
 
-    - name: Get commit count
-      id: commit-count
-      run: echo "count=$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
+    - name: Check if this is the first commit
+      id: check-commits
+      run: |
+        if git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
+          echo "has_parent=true" >> $GITHUB_OUTPUT
+        else
+          echo "has_parent=false" >> $GITHUB_OUTPUT
+        fi
 
     - name: Scan for secrets (full scan for first commit)
-      if: steps.commit-count.outputs.count == '1'
+      if: steps.check-commits.outputs.has_parent == 'false'
       uses: trufflesecurity/trufflehog@main
       with:
         path: ./
         extra_args: --debug --only-verified
 
-    - name: Scan for secrets (diff scan)
-      if: steps.commit-count.outputs.count > '1'
+    - name: Scan for secrets (diff scan for subsequent commits)
+      if: steps.check-commits.outputs.has_parent == 'true'
       uses: trufflesecurity/trufflehog@main
       with:
         path: ./
-        base: ${{ github.event.repository.default_branch }}
+        base: HEAD~1
         head: HEAD
         extra_args: --debug --only-verified
 
