@@ -176,8 +176,10 @@ jobs:
       uses: treosh/lighthouse-ci-action@v10
       with:
         configPath: './lighthouserc.json'
-        uploadArtifacts: true
-        temporaryPublicStorage: true
+        uploadArtifacts: false
+        temporaryPublicStorage: false
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: Deploy to Production
