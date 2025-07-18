@@ -1,4 +1,15 @@
-export default function Project({ project, handleOpenPopUp }: { project: any, handleOpenPopUp: (project: any) => void }) {
+interface ProjectType {
+  id: number;
+  thumbnail: string;
+  title: string;
+  description: string;
+  [key: string]: unknown; // For any additional properties
+}
+
+export default function Project({ project, handleOpenPopUp }: { 
+  readonly project: ProjectType; 
+  readonly handleOpenPopUp: (project: ProjectType) => void; 
+}) {
   return (
     <div className="w-[25%] h-[670px] bg-white flex flex-col gap-5 p-2 rounded-sm shadow-md drop-shadow-md">
       <div className="w-full  h-[60%]">
